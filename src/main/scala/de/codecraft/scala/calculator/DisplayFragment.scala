@@ -7,10 +7,8 @@ import android.widget.TextView
 import macroid._
 import macroid.FullDsl._
 import macroid.akkafragments.AkkaFragment
-import macroid.util.Ui
 
 class DisplayFragment extends AkkaFragment with Contexts[AkkaFragment] {
-  import de.codecraft.scala.calculator.DisplayActor._
 
   lazy val actorName = getArguments.getString("name")
 
@@ -18,10 +16,9 @@ class DisplayFragment extends AkkaFragment with Contexts[AkkaFragment] {
 
   var result = slot[TextView]
 
-  def receive : Ui[Any] = {
-    case Clear => result <~ text("")
-    case Display(v) => result <~ text(v)
-  }
+  def clear = result <~ text("")
+
+  def display(s: String) = result <~ text(s)
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = getUi {
     w[TextView] <~ wire(result)

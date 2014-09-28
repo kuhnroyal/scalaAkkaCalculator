@@ -16,10 +16,10 @@ class DisplayActor extends FragmentActor[DisplayFragment] with ActorLogging {
   def receive = receiveUi andThen {
     case Clear =>
       log.debug("received clear message")
-      withUi(f => f.receive)
+      withUi(f => f.clear)
 
     case Display(v) =>
       log.debug(s"received display string: ${v}")
-      withUi(f => f.receive)
+      withUi(f => f.display(v))
   }
 }

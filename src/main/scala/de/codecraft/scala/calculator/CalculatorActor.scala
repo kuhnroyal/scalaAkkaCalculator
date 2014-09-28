@@ -37,6 +37,7 @@ class CalculatorActor extends Actor {
 
   override def receive: Receive = {
     case n: Number => display ! Display(n.symbol)
+    case CalculatorActor.Clear => display ! DisplayActor.Clear
     case o: Operation => display ! Display(o.symbol)
   }
 }
