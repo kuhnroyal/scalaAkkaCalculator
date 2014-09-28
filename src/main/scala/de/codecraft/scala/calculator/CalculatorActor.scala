@@ -2,7 +2,6 @@ package de.codecraft.scala.calculator
 
 import akka.actor.{Props, Actor}
 
-
 object CalculatorActor {
   def props = Props(new CalculatorActor)
 
@@ -33,7 +32,7 @@ object CalculatorActor {
 class CalculatorActor extends Actor {
   import de.codecraft.scala.calculator.CalculatorActor._
 
-  lazy val display = Some(context.system.actorSelection(s"/user/display"))
+  lazy val display = context.system.actorSelection("/user/display")
 
   override def receive: Receive = {
     case n: Number => display ! n
