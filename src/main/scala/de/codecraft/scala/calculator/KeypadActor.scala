@@ -8,12 +8,11 @@ object KeypadActor {
 }
 
 class KeypadActor extends FragmentActor[KeypadFragment] with ActorLogging {
-  import macroid.akkafragments.FragmentActor._
+  import CalculatorActor._
+
+  lazy val calculator = context.system.actorSelection("/user/calculate")
 
   def receive = receiveUi andThen {
-    case AttachUi(_) =>
-
-    case DetachUi =>
-    // do nothing
+    case m: Message => calculator ! m
   }
 }
