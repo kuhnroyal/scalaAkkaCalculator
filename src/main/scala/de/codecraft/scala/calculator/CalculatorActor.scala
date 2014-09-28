@@ -2,31 +2,41 @@ package de.codecraft.scala.calculator
 
 import akka.actor.{Props, Actor}
 
+
 object CalculatorActor {
   def props = Props(new CalculatorActor)
 
   // Operations
-  case object Addition
-  case object Subtraction
-  case object Multiplication
-  case object Division
-  case object Equals
-  case object Clear
+  abstract class Message
+  abstract class Operation extends Message
+  case object Addition extends Operation
+  case object Subtraction extends Operation
+  case object Multiplication extends Operation
+  case object Division extends Operation
+  case object Equals extends Operation
+  case object Clear extends Operation
 
   // Numbers
-  case object One
-  case object Two
-  case object Three
-  case object Four
-  case object Five
-  case object Six
-  case object Seven
-  case object Eight
-  case object Nine
-  case object Zero
+  abstract class Number extends Message
+  case object One extends Number
+  case object Two extends Number
+  case object Three extends Number
+  case object Four extends Number
+  case object Five extends Number
+  case object Six extends Number
+  case object Seven extends Number
+  case object Eight extends Number
+  case object Nine extends Number
+  case object Zero extends Number
 }
 
 class CalculatorActor extends Actor {
+  import de.codecraft.scala.calculator.CalculatorActor._
 
-  override def receive: Receive = ???
+  lazy val display = Some(context.system.actorSelection(s"/user/display"))
+
+  override def receive: Receive = {
+    case n: Number => display ! n
+    case o: Operation => display ! o
+  }
 }

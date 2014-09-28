@@ -1,27 +1,29 @@
 package de.codecraft.scala.calculator
 
-import android.view.{Gravity, ViewGroup, LayoutInflater}
+import android.view.{ViewGroup, LayoutInflater}
 import android.os.Bundle
-import android.widget.{FrameLayout, Button}
-import android.view.ViewGroup.LayoutParams._
+import android.widget.TextView
 
 import macroid._
 import macroid.FullDsl._
-import macroid.contrib.ExtraTweaks._
-import macroid.util.Ui
 import macroid.akkafragments.AkkaFragment
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import macroid.util.Ui
 
 class DisplayFragment extends AkkaFragment with Contexts[AkkaFragment] {
+  import de.codecraft.scala.calculator.DisplayActor._
 
   lazy val actorName = getArguments.getString("name")
 
   lazy val actor = Some(actorSystem.actorSelection(s"/user/$actorName"))
 
-  def receive = ???
+  var result = slot[TextView]
+
+  def receive : Ui[Any] = {
+    case Clear => result <~ text("")
+    case Display(v) => result <~ text(v)
+  }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = getUi {
-
+    w[TextView] <~ wire(result)
   }
 }

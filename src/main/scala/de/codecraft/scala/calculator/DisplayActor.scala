@@ -1,6 +1,6 @@
 package de.codecraft.scala.calculator
 
-import akka.actor.{ActorLogging, ActorRef, Props}
+import akka.actor.{ActorLogging, Props}
 import macroid.akkafragments.FragmentActor
 
 object DisplayActor {
@@ -12,16 +12,14 @@ object DisplayActor {
 
 class DisplayActor extends FragmentActor[DisplayFragment] with ActorLogging {
   import de.codecraft.scala.calculator.DisplayActor._
-  import macroid.akkafragments.FragmentActor._
 
   def receive = receiveUi andThen {
-    case Clear => ???
+    case Clear =>
+      log.debug("received clear message")
+      withUi(f => f.receive)
 
-    case Display(v) => ???
-
-    case AttachUi(_) =>
-
-    case DetachUi =>
-      // do nothing
+    case Display(v) =>
+      log.debug(s"received display string: ${v}")
+      withUi(f => f.receive)
   }
 }
