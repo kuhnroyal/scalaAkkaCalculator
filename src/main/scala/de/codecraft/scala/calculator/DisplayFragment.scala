@@ -2,7 +2,8 @@ package de.codecraft.scala.calculator
 
 import android.view.{ViewGroup, LayoutInflater}
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.{LinearLayout, TextView}
+import android.view.ViewGroup.LayoutParams._
 
 import macroid._
 import macroid.FullDsl._
@@ -21,6 +22,6 @@ class DisplayFragment extends AkkaFragment with Contexts[AkkaFragment] {
   def display(s: String) = result <~ text(s)
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = getUi {
-    w[TextView] <~ wire(result)
+    l[LinearLayout]( w[TextView] <~ wire(result)) <~ layoutParams[LinearLayout](MATCH_PARENT, WRAP_CONTENT)
   }
 }
