@@ -17,6 +17,8 @@ class MainActivity extends FragmentActivity with Contexts[FragmentActivity] with
 
   // fragments
   lazy val calculate = actorSystem.actorOf(CalculatorActor.props, "calculate")
+  lazy val display = actorSystem.actorOf(DisplayActor.props, "display")
+  lazy val keypad = actorSystem.actorOf(KeypadActor.props, "keypad")
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
