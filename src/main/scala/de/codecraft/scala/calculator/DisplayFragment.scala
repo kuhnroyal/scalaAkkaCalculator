@@ -22,5 +22,6 @@ class DisplayFragment extends AkkaFragment with Contexts[AkkaFragment] {
   def receive = ???
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = getUi {
+
   }
 }
